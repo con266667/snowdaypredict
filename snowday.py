@@ -1,5 +1,3 @@
-from flask import Flask
-from flask_inputs import Inputs
 from sklearn import tree
 
 
@@ -17,19 +15,11 @@ labels = [0, 1, 0, 0, 0,
 0, 0, 0, 0, 0,
 0, 0, 1, 0]
 
-app = Flask(__name__)
-
-@app.route('/', methods=['POST'])
-return CustomerInputs()
-
-class CustomerInputs(Inputs):
-    rule = {
-        'id': [DataRequired()]
-    }
-
+#setup model
 clf = tree.DecisionTreeClassifier()
 clf = clf.fit(features, labels)
 
+#inputs
 print("Snow Day Predictor")
 avgtemp = input("What's the average temperature?")
 snow = input("How much snow?")
@@ -38,8 +28,10 @@ maxwind = input("What's the max wind?")
 high = input("What's the average high?")
 low = input("What's the average low?")
 
+#predict
 prediction = clf.predict([[avgtemp, snow, rain, maxwind, high, low]])
 
+#result
 if (prediction == 1):
     print("The AI model predicted a snow day")
     print('YYYYYYY       YYYYYYY           AAA           YYYYYYY       YYYYYYY      !!! ')
